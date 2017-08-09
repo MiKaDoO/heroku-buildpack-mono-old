@@ -27,8 +27,8 @@ LP_DIR=`cd $(dirname $0); cd ..; pwd`
 cd ${BUILD_DIR}
 mkdir -p ${CACHE_DIR}
 
-MONO_CACHE_LOCATION=${CACHE_DIR}/$STACK/mono-${MONO_VERSION}
-conditional_download ${DEPENDENCY_S3_BUCKET_PATH}/${STACK}/mono-${MONO_VERSION}.tar.gz ${MONO_CACHE_LOCATION}
+MONO_CACHE_LOCATION=${CACHE_DIR}/cedar-14/mono-${MONO_VERSION}
+conditional_download ${DEPENDENCY_S3_BUCKET_PATH}/cedar-14/mono-${MONO_VERSION}.tar.gz ${MONO_CACHE_LOCATION}
 
 cp -r "${MONO_CACHE_LOCATION}/mono" .
 # TODO: this is done because `ln -s` causes nuget to fail in subtle ways. Fix please
@@ -72,13 +72,13 @@ mkdir -p ${BUILD_DIR}/.profile.d
 cp -n ${LP_DIR}/.profile.d/* ${BUILD_DIR}/.profile.d/
 
 if [ -d "$BUILD_DIR/_PublishedWebsites/" ]; then
-  XSP_CACHE_LOCATION=${CACHE_DIR}/${STACK}/xsp-${XSP_VERSION}
-  conditional_download ${DEPENDENCY_S3_BUCKET_PATH}/${STACK}/xsp-${XSP_VERSION}.tar.gz ${XSP_CACHE_LOCATION}
+  XSP_CACHE_LOCATION=${CACHE_DIR}/cedar-14/xsp-${XSP_VERSION}
+  conditional_download ${DEPENDENCY_S3_BUCKET_PATH}/cedar-14/xsp-${XSP_VERSION}.tar.gz ${XSP_CACHE_LOCATION}
   cp -r ${XSP_CACHE_LOCATION}/xsp .
   cp -r ${XSP_CACHE_LOCATION}/xsp/lib/mono/gac/* ./mono/lib/mono/gac/
 
-  NGINX_CACHE_PATH=${CACHE_DIR}/${STACK}/nginx
-  conditional_download ${DEPENDENCY_S3_BUCKET_PATH}/${STACK}/nginx.tar.gz ${NGINX_CACHE_PATH}
+  NGINX_CACHE_PATH=${CACHE_DIR}/cedar-14/nginx
+  conditional_download ${DEPENDENCY_S3_BUCKET_PATH}/cedar-14/nginx.tar.gz ${NGINX_CACHE_PATH}
 
   mkdir -p ${BUILD_DIR}/nginx
   cp ${NGINX_CACHE_PATH}/nginx ${BUILD_DIR}/nginx/.
