@@ -20,16 +20,16 @@ touch /app/nginx/logs/access.log /app/nginx/logs/error.log
 
 #Start app server
 (
-    APP_ROOT=$(find ~/approot/packages/ -name root | head -1)
-    echo "Starting Kestrel in $APP_ROOT"
-    cd ${APP_ROOT}
-    sleep 2d | klr Microsoft.Framework.ApplicationHost Kestrel --server.urls http://+:8080
+    MONO_OPTIONS=--server /app/xsp/bin/fastcgi-mono-server4 \
+        /applications=/:/app/_PublishedWebsites/`ls /app/_PublishedWebsites/ | head -1` \
+        /socket=unix:/tmp/nginx.socket
     echo 'app' >$psmgr
 ) &
 
 #Start nginx
 (
-    # We expect nginx to run in foreground
+    #We expect nginx to run in foreground
+    #We also expect a socket to be at /tmp/nginx.socket
     /app/nginx/nginx -p /app/nginx -c /app/nginx/nginx.conf
     echo 'nginx' >$psmgr
 ) &
